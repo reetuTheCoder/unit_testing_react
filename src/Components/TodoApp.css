@@ -1,5 +1,5 @@
 .todo-container {
-  width: 320px;
+  width: 360px;
   margin: 50px auto;
   background: #fff;
   border-radius: 12px;
@@ -69,6 +69,17 @@
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 8px;
+}
+
+.todo-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.completed-task {
+  text-decoration: line-through;
+  color: #888;
 }
 
 .todo-actions {
