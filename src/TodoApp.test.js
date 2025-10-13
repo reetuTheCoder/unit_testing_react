@@ -1,4 +1,4 @@
-import { render, screen, fireEvent,within } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import TodoApp from "./Components/TodoApp";
 
 describe("TodoApp Step-by-Step Tests", () => {
@@ -20,11 +20,11 @@ describe("TodoApp Step-by-Step Tests", () => {
     const input = screen.getByPlaceholderText(/add or edit task/i);
     const addButton = screen.getByText(/add/i);
     // Type a todo
-    fireEvent.change(input, { target: { value: "Test Todo" } });
+    fireEvent.change(input, { target: { value: "Test Todo 1" } });
     // Click add button
     fireEvent.click(addButton);
     // Check if the todo appears in the list
-    expect(screen.getByText("Test Todo")).toBeInTheDocument();
+    expect(screen.getByText("Test Todo 1")).toBeInTheDocument();
     expect(input.value).toBe("");
   });
 
@@ -43,5 +43,21 @@ describe("TodoApp Step-by-Step Tests", () => {
     const deleteButton = within(todoItem).getByText("❌");
     expect(deleteButton).toBeInTheDocument();
   });
-  
+  test("can delete a todo", () => {
+    render(<TodoApp />);
+
+    const input = screen.getByPlaceholderText(/add or edit task/i);
+    const addButton = screen.getByText(/add/i);
+    fireEvent.change(input, { target: { value: "Todo 1" } });
+    fireEvent.click(addButton);
+    fireEvent.change(input, { target: { value: "Todo 2" } });
+    fireEvent.click(addButton);
+
+    const firstTodoItem = screen.getByText("Todo 1").closest("li");
+    const deleteButton = within(firstTodoItem).getByText("❌");
+    fireEvent.click(deleteButton);
+
+    expect(screen.queryByText("Todo 1")).toBeNull();
+    expect(screen.getByText("Todo 2")).toBeInTheDocument();
+  });
 });
