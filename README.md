@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+**React Testing Library Points**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+render() // Mounts a React component into a virtual DOM so you can test it.
 
-## Available Scripts
+screen() // Provides access to the rendered DOM elements; you can query them by text, placeholder, role, etc.
 
-In the project directory, you can run:
+fireEvent() // Simulates user interactions like clicks, typing, focus, or change events.
 
-### `npm start`
+Jest - is the test runner and assertion library. It provides test(), describe(), and expect(), but it does not render components or simulate events.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+RTL - is the helper that lets you interact with React components in a way a user would, while Jest just checks if your expectations are true.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Basic Query Methods**
 
-### `npm test`
+getBy()
+Returns - Returns single element
+Throws Error - ✅ Throws if not found
+Use Case - Use when element must exist
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+queryBy()
+Returns - Returns single element or null
+Throws Error - ❌ Returns null if not found
+Use Case - Use when element may or may not exist
 
-### `npm run build`
+getAllBy()
+Returns - Returns array of elements
+Throws Error - ✅ Throws if none found
+Use Case - found
+Use when multiple elements expected
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+queryAllBy()
+Returns - Returns array of elements
+Throws Error - ❌ Returns empty array if none
+Use Case - Optional multiple elements
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Query Types**
+*getByText("text")* = Element containing exact text  
+*getByRole("role")* = Element by ARIA role (button, checkbox, etc.)
+*getByPlaceholderText("placeholder")* = Input element with a placeholder  
+*getByLabelText("label")* = Input associated with a `<label>`  
+*getByTestId("id")* = Element with `data-testid="id"`
+*within()* = within takes a DOM element as an argument and returns an object containing all the standard Testing Library query functions (like getByText, getByRole, queryByTestId, etc.) but bound to that specific element. This means any subsequent query using this within object will only search within the provided element's subtree.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+const addButton = screen.getByText("Add"); // here is the text will be same then text cas will pass when we add like ("Add")
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Use regex for case-insensitive matching:
+screen.getByText(/add/i);  // but wel you use like "regex" it will matches ;ike - "Add", "add", "ADD", etc.
