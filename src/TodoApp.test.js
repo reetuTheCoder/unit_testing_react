@@ -60,4 +60,20 @@ describe("TodoApp Step-by-Step Tests", () => {
     expect(screen.queryByText("Todo 1")).toBeNull();
     expect(screen.getByText("Todo 2")).toBeInTheDocument();
   });
+  test("can add multiple todos", () => {
+    render(<TodoApp />);
+
+    const input = screen.getByPlaceholderText(/add or edit task/i);
+    const addButton = screen.getByText(/add/i);
+
+    const todos = ["Todo 1", "Todo 2", "Todo 3"];
+    todos.forEach((todo) => {
+      fireEvent.change(input, { target: { value: todo } });
+      fireEvent.click(addButton);
+    });
+
+    todos.forEach((todo) => {
+      expect(screen.getByText(todo)).toBeInTheDocument();
+    });
+  });
 });
