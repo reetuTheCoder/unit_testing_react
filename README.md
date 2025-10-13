@@ -39,7 +39,7 @@ Use Case - Optional multiple elements
 *getByPlaceholderText("placeholder")* = Input element with a placeholder  
 *getByLabelText("label")* = Input associated with a `<label>`  
 *getByTestId("id")* = Element with `data-testid="id"`
-
+*within()* = within takes a DOM element as an argument and returns an object containing all the standard Testing Library query functions (like getByText, getByRole, queryByTestId, etc.) but bound to that specific element. This means any subsequent query using this within object will only search within the provided element's subtree.
 
 
 const addButton = screen.getByText("Add"); // here is the text will be same then text cas will pass when we add like ("Add")

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent} from "@testing-library/react";
+import { render, screen, fireEvent,within } from "@testing-library/react";
 import TodoApp from "./Components/TodoApp";
 
 describe("TodoApp Step-by-Step Tests", () => {
@@ -23,8 +23,25 @@ describe("TodoApp Step-by-Step Tests", () => {
     fireEvent.change(input, { target: { value: "Test Todo" } });
     // Click add button
     fireEvent.click(addButton);
-
     // Check if the todo appears in the list
     expect(screen.getByText("Test Todo")).toBeInTheDocument();
+    expect(input.value).toBe("");
   });
+
+  test("can add a new todo with a delete button", () => {
+    render(<TodoApp />);
+
+    const input = screen.getByPlaceholderText(/add or edit task/i);
+    const addButton = screen.getByText(/add/i);
+    fireEvent.change(input, { target: { value: "Test Todo" } });
+    fireEvent.click(addButton);
+
+    const todoItem = screen.getByText("Test Todo").closest("li");
+    expect(todoItem).toBeInTheDocument();
+
+    // Check that Delete button exists inside this todo
+    const deleteButton = within(todoItem).getByText("❌");
+    expect(deleteButton).toBeInTheDocument();
+  });
+  
 });
