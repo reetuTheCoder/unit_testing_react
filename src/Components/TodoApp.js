@@ -4,15 +4,44 @@ import "./TodoApp.css";
 export default function TodoApp() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(null);
 
   const handleAddTodo = () => {
-    if (!todo.trim()) return; 
-    setTodos([...todos, todo]);
+    if (!todo.trim()) return;
+
+    if (isEditing) {
+      // update existing todo
+      const updatedTodos = [...todos];
+      console.log("updatedTodos", updatedTodos); // here will be todo old value 
+
+      updatedTodos[currentIndex] = todo;
+
+      console.log("updatedTodos new", updatedTodos[currentIndex]); // here will be todo updated value 
+      setTodos(updatedTodos);
+      setIsEditing(false);
+      setCurrentIndex(null);
+    } else {
+      // add new todo
+      setTodos([...todos, todo]);
+    }
+
     setTodo("");
   };
 
   const handleDeleteTodo = (index) => {
-    setTodos(todos.filter((ele, i) => i !== index));
+    setTodos(todos.filter((_, i) => i !== index));
+    if (isEditing && index === currentIndex) {
+      setIsEditing(false);
+      setTodo("");
+      setCurrentIndex(null);
+    }
+  };
+
+  const handleEditTodo = (index) => {
+    setTodo(todos[index]);
+    setIsEditing(true);
+    setCurrentIndex(index);
   };
 
   return (
@@ -22,13 +51,13 @@ export default function TodoApp() {
       <div className="todo-input-section">
         <input
           type="text"
-          placeholder="Add a new task..."
+          placeholder="Add or edit task..."
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
           className="todo-input"
         />
         <button onClick={handleAddTodo} className="todo-add-btn">
-          Add
+          {isEditing ? "Save" : "Add"}
         </button>
       </div>
 
@@ -36,12 +65,20 @@ export default function TodoApp() {
         {todos.map((t, index) => (
           <li key={index} className="todo-item">
             <span>{t}</span>
-            <button
-              onClick={() => handleDeleteTodo(index)}
-              className="todo-delete-btn"
-            >
-              ❌
-            </button>
+            <div className="todo-actions">
+              <button
+                onClick={() => handleEditTodo(index)}
+                className="todo-edit-btn"
+              >
+                ✏️
+              </button>
+              <button
+                onClick={() => handleDeleteTodo(index)}
+                className="todo-delete-btn"
+              >
+                ❌
+              </button>
+            </div>
           </li>
         ))}
       </ul>

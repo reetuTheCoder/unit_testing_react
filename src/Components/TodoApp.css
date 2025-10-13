@@ -56,11 +56,21 @@
   margin-bottom: 8px;
 }
 
+.todo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.todo-edit-btn,
 .todo-delete-btn {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+
+.todo-edit-btn:hover {
+  color: #007bff;
 }
 
 .todo-delete-btn:hover {
