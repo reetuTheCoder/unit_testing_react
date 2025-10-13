@@ -98,4 +98,19 @@ describe("TodoApp Step-by-Step Tests", () => {
     expect(screen.queryByText("Edit Me")).toBeNull();
     expect(screen.getByText("Edited Todo")).toBeInTheDocument();
   });
+
+  test("can mark a todo as completed", () => {
+    render(<TodoApp />);
+    const input = screen.getByPlaceholderText(/add or edit task/i);
+    const addButton = screen.getByText(/add/i);
+
+    fireEvent.change(input, { target: { value: "Complete Me" } });
+    fireEvent.click(addButton);
+
+    const todoItem = screen.getByText("Complete Me").closest("li");
+    const checkbox = within(todoItem).getByRole("checkbox");
+
+    fireEvent.click(checkbox);
+    expect(screen.getByText("Complete Me")).toHaveClass("completed-task");
+  });
 });
