@@ -15,7 +15,9 @@
 
 .todo-input-section {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .todo-input {
@@ -26,18 +28,31 @@
   font-size: 14px;
 }
 
-.todo-add-btn {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
+.todo-add-btn,
+.todo-cancel-btn {
+  padding: 8px 14px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  color: white;
+  font-size: 14px;
   transition: background 0.2s;
+}
+
+.todo-add-btn {
+  background-color: #007bff;
 }
 
 .todo-add-btn:hover {
   background-color: #0056b3;
+}
+
+.todo-cancel-btn {
+  background-color: #6c757d;
+}
+
+.todo-cancel-btn:hover {
+  background-color: #555;
 }
 
 .todo-list {

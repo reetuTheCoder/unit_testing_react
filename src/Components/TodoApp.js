@@ -13,11 +13,11 @@ export default function TodoApp() {
     if (isEditing) {
       // update existing todo
       const updatedTodos = [...todos];
-      console.log("updatedTodos", updatedTodos); // here will be todo old value 
+      console.log("updatedTodos", updatedTodos); // here will be todo old value
 
       updatedTodos[currentIndex] = todo;
 
-      console.log("updatedTodos new", updatedTodos[currentIndex]); // here will be todo updated value 
+      console.log("updatedTodos new", updatedTodos[currentIndex]); // here will be todo updated value
       setTodos(updatedTodos);
       setIsEditing(false);
       setCurrentIndex(null);
@@ -31,6 +31,7 @@ export default function TodoApp() {
 
   const handleDeleteTodo = (index) => {
     setTodos(todos.filter((_, i) => i !== index));
+    // if deleting the item being edited, reset edit state
     if (isEditing && index === currentIndex) {
       setIsEditing(false);
       setTodo("");
@@ -42,6 +43,12 @@ export default function TodoApp() {
     setTodo(todos[index]);
     setIsEditing(true);
     setCurrentIndex(index);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setTodo("");
+    setCurrentIndex(null);
   };
 
   return (
@@ -59,6 +66,11 @@ export default function TodoApp() {
         <button onClick={handleAddTodo} className="todo-add-btn">
           {isEditing ? "Save" : "Add"}
         </button>
+         {isEditing && (
+          <button onClick={handleCancelEdit} className="todo-cancel-btn">
+            Cancel
+          </button>
+        )}
       </div>
 
       <ul className="todo-list">
