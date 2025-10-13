@@ -102,3 +102,7 @@
 .todo-delete-btn:hover {
   color: red;
 }
+.todo-edit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

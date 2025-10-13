@@ -40,6 +40,7 @@ export default function TodoApp() {
   };
 
   const handleEditTodo = (index) => {
+    if (todos[index].completed) return; // Do not edit completed tasks
     setTodo(todos[index].text);
     setIsEditing(true);
     setCurrentIndex(index);
@@ -55,6 +56,11 @@ export default function TodoApp() {
     const updatedTodos = [...todos];
     updatedTodos[index].completed = !updatedTodos[index].completed;
     setTodos(updatedTodos);
+
+    // Cancel edit if the task being edited is marked completed
+    if (isEditing && index === currentIndex && updatedTodos[index].completed) {
+      handleCancelEdit();
+    }
   };
 
   return (
@@ -96,6 +102,7 @@ export default function TodoApp() {
               <button
                 onClick={() => handleEditTodo(index)}
                 className="todo-edit-btn"
+                disabled={t.completed} // disable edit if completed
               >
                 ✏️
               </button>
