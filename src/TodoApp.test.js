@@ -76,4 +76,26 @@ describe("TodoApp Step-by-Step Tests", () => {
       expect(screen.getByText(todo)).toBeInTheDocument();
     });
   });
+  test("can edit a todo", () => {
+    render(<TodoApp />);
+
+    // Add a todo
+    const input = screen.getByPlaceholderText(/add or edit task/i);
+    const addButton = screen.getByText(/add/i);
+
+    fireEvent.change(input, { target: { value: "Edit Me" } });
+    fireEvent.click(addButton);
+
+    const todoItem = screen.getByText("Edit Me").closest("li");
+    const editButton = within(todoItem).getByText("✏️");
+    fireEvent.click(editButton);
+
+    // Change input value
+    fireEvent.change(input, { target: { value: "Edited Todo" } });
+    const saveButton = screen.getByText(/save/i);
+    fireEvent.click(saveButton);
+
+    expect(screen.queryByText("Edit Me")).toBeNull();
+    expect(screen.getByText("Edited Todo")).toBeInTheDocument();
+  });
 });
