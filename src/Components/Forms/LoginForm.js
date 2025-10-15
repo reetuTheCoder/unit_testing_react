@@ -1,44 +1,14 @@
 import React, { useReducer } from "react";
+import { initialState, formReducer } from "./formReducer";
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "UPDATE_FORMS_FIELD":
-      return {
-        ...state,
-        [action.field]: action.value,
-      };
-
-    case "SUBMIT":
-      return {
-        ...state,
-        isSubmitting: true,
-      };
-    case "SUCCESS":
-      return {
-        ...state,
-        isSubmitting: false,
-        successMessage: "Form submitted successfully!",
-      };
-    case "ERROR":
-      return {
-        ...state,
-        isSubmitting: false,
-        errorMessage: "Something went wrong!",
-      };
-    default:
-      return state;
-  }
-}
-const initialState = {
+const loginInitialStateVal = {
+  ...initialState,
   email: "",
   password: "",
-  isSubmitting: false,
-  successMessage: "",
-  errorMessage: "",
 };
 
 const LoginForm = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(formReducer, loginInitialStateVal);
   console.log(state);
 
   const handleSubmit = (e) => {
@@ -46,12 +16,12 @@ const LoginForm = () => {
 
     dispatch({ type: "SUBMIT" });
     setTimeout(() => {
-    if (state.email && state.password) {
-      dispatch({ type: "SUCCESS" });
-    } else {
-      dispatch({ type: "ERROR" });
-    }
-  }, 1500);
+      if (state.email && state.password) {
+        dispatch({ type: "SUCCESS" });
+      } else {
+        dispatch({ type: "ERROR" });
+      }
+    }, 1500);
   };
   return (
     <div>
