@@ -28,6 +28,7 @@ const AuthContext = createContext();
 console.log("AuthContextAuthContext", AuthContext);
 
 export const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(authReducer, initialAuthState);
   const login = (user) => {
     dispatch({ type: "LOGIN", payload: user });
   };
@@ -35,7 +36,6 @@ export const AuthProvider = ({ children }) => {
   const logOut = () => {
     dispatch({ type: "LOGOUT" });
   };
-  const [state, dispatch] = useReducer(authReducer, initialAuthState);
   return (
     <div>
       <AuthContext.Provider value={{ state, login, logOut }}>

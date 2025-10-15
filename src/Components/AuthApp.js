@@ -4,7 +4,15 @@ import { useAuth } from "../context/AuthContext";
 console.log(useAuth);
 
 const AuthApp = () => {
-  const { state, login, logout } = useAuth();
+  const { state, login, logOut } = useAuth();
+
+  const handleToggle = () => {
+    if (state.isAuth) {
+      logOut();
+    } else {
+      login({ name: "Reetu Singh", email: "reetu@gmail.com" });
+    }
+  };
   return (
     <div>
       <h2>
@@ -13,17 +21,9 @@ const AuthApp = () => {
           : "Please log in to continue"}
       </h2>
 
-      {state.isAuth ? (
-        <button onClick={logout}>Logout</button>
-      ) : (
-        <button
-          onClick={() =>
-            login({ name: "Reetu Singh", email: "reetu@gmail.com" })
-          }
-        >
-          Login
-        </button>
-      )}
+      <button onClick={handleToggle}>
+        {state.isAuth ? "Logout" : "Login"}
+      </button>
     </div>
   );
 };
