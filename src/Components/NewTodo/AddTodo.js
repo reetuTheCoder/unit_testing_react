@@ -1,29 +1,12 @@
 import React, { useState } from "react";
 import TodoList from "./TodoList";
 import CompletedCounter from "./CompletedCounter";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, setTask, setTodos,deleteTodo, toggleComplete } from "../../redux/actions/todoActions";
 
 function AddTodo() {
-  const [task, setTask] = useState("");
-  const [todos, setTodos] = useState([]);
-
-  const handleAdd = () => {
-    if (task.trim() !== "") {
-      setTodos([...todos, { text: task, completed: false }]);
-      setTask("");
-    }
-  };
-
-  const toggleComplete = (index) => {
-    setTodos(
-      todos.map((todo, i) =>
-        i === index ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
-
-  const deleteTodo = (index) => {
-    setTodos(todos.filter((_, i) => i !== index));
-  };
+  const dispatch = useDispatch();
+  const { task, todos } = useSelector((state) => state.todo);
 
   const completedCount = todos.filter((t) => t.completed).length;
 
@@ -33,13 +16,13 @@ function AddTodo() {
         <input
           type="text"
           value={task}
-          onChange={(e) => setTask(e.target.value)}
+          onChange={(e) => dispatch(setTask(e.target.value))}
           placeholder="Add a new task"
         />
-        <button onClick={handleAdd}>Add</button>
+        <button onClick={() => dispatch(addTodo())}>Add</button>
       </div>
 
-      <TodoList todos={todos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} />
+      <TodoList todos={todos} toggleComplete={(i) => dispatch(toggleComplete(i))} deleteTodo={(i) => dispatch(deleteTodo(i))} />
       <CompletedCounter completedCount={completedCount} total={todos.length} />
     </div>
   );
