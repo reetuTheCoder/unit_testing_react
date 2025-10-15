@@ -1,4 +1,4 @@
-import { UPDATE_FIELD, SUBMIT_FORM, SUBMIT_SUCCESS, SUBMIT_ERROR } from "../actions/contactActions";
+import { UPDATE_FORMS_FIELD, SUBMIT, SUCCESS, ERROR } from "../actions/contactActions";
 
 const initialState = {
   fname: "",
@@ -12,33 +12,29 @@ const initialState = {
 
 export default function contactReducer(state = initialState, action) {
   switch (action.type) {
-    case UPDATE_FIELD:
+    case UPDATE_FORMS_FIELD:
       return {
         ...state,
         [action.payload.field]: action.payload.value,
       };
 
-    case SUBMIT_FORM:
+    case SUBMIT:
       return {
         ...state,
         isSubmitting: true,
-        successMessage: "",
-        errorMessage: "",
       };
 
-    case SUBMIT_SUCCESS:
+    case SUCCESS:
       return {
         ...state,
         isSubmitting: false,
         successMessage: "Form submitted successfully!",
-        errorMessage: "",
       };
 
-    case SUBMIT_ERROR:
+    case ERROR:
       return {
         ...state,
         isSubmitting: false,
-        successMessage: "",
         errorMessage: "Something went wrong!",
       };
 
