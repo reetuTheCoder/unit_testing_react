@@ -9,12 +9,12 @@ function App() {
   return (
     <div className="App">
       {/* <TodoApp/> */}
-      <LoginForm />
+      {/* <LoginForm /> */}
       <ContactForm />
 
-      <AuthProvider>
+      {/* <AuthProvider>
         <AuthApp />
-      </AuthProvider>
+      </AuthProvider> */}
     </div>
   );
 }
