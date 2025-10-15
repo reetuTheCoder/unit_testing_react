@@ -3,6 +3,7 @@ import AuthApp from "./Components/AuthApp";
 import ContactForm from "./Components/Forms/ContactForm";
 import LoginForm from "./Components/Forms/LoginForm";
 import NewContactForm from "./Components/NewForms/NewContactForm";
+import AddTodo from "./Components/NewTodo/AddTodo";
 import { AuthProvider } from "./context/AuthContext";
 // import TodoApp from './Components/TodoApp';
 
@@ -17,7 +18,9 @@ function App() {
         <AuthApp />
       </AuthProvider> */}
 
-      <NewContactForm/>
+      {/* <NewContactForm/> */}
+
+      <AddTodo/>
     </div>
   );
 }
