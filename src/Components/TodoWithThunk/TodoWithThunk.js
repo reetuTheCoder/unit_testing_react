@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { addTodo, deleteTodo, fetchTodos } from "../../redux/actions/todoActions";
 
 function TodoWithThunk() {
   const [task, setTask] = useState("");
   const dispatch = useDispatch();
   const { list, loading, error } = useSelector((state) => state.todos);
-
+ const store = useStore();
+  console.log("list", list);
+  
+   // Subscribe to state changes
   useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      console.log("State changed (subscribe):", store.getState());
+    });
+
+    // Fetch todos
     dispatch(fetchTodos());
-  }, [dispatch]);
+
+    // Cleanup on unmount
+    return () => unsubscribe();
+  }, [dispatch, store]);
 
   return (
     <div style={{ padding: "20px" }}>

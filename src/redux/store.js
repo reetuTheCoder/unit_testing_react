@@ -7,5 +7,8 @@ const rootReducer = combineReducers({
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+// console.log("fdsfn", store);
+console.log("store.getState",store.getState());
+
 
 export default store;
